@@ -14,12 +14,14 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("pong game")
 
-# player initialization
+# player initialization and movement
 player = pygame.Rect(0, 0, 20, 70)
 player.centery = height/2
 player.x = 10
+player_speed = 5
 
-# player initialization
+
+# cpu initialization and movement
 cpu = pygame.Rect(0, 0, 20, 70)
 cpu.centery = height/2
 cpu.x = width - 30
@@ -49,6 +51,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP] and player.top >= 0:
+        player.y -= player_speed
+    if keys[pygame.K_DOWN] and player.bottom <= height:
+        player.y += player_speed
     
     screen.fill("black")
 
