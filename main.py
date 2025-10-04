@@ -25,6 +25,7 @@ player_speed = 5
 cpu = pygame.Rect(0, 0, 20, 70)
 cpu.centery = height/2
 cpu.x = width - 30
+cpu_speed = 5
 
 # ball initialization and movement
 ball = pygame.Rect(0, 0, 30, 30)
@@ -43,6 +44,21 @@ def move_ball():
     if ball.left <= 0 or ball.right >= width:
         ball_speed_x *= -1
 
+# player movement
+def move_player():
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP] and player.top >= 0:
+        player.y -= player_speed
+    if keys[pygame.K_DOWN] and player.bottom <= height:
+        player.y += player_speed
+
+# player movement
+def move_cpu():
+    if ball.centery > cpu.centery and player.bottom <= height:
+        cpu.y += cpu_speed
+    if ball.centery < cpu.centery and player.top >= 0:
+        cpu.y -= cpu_speed
+
 
 
 # while loop for continuos running
@@ -51,12 +67,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and player.top >= 0:
-        player.y -= player_speed
-    if keys[pygame.K_DOWN] and player.bottom <= height:
-        player.y += player_speed
     
     screen.fill("black")
 
@@ -78,6 +88,8 @@ while running:
         color="red",
         rect=cpu
     )
+    # cpu move
+    move_cpu()
 
     # pingpong ball
     pygame.draw.ellipse(
@@ -85,7 +97,12 @@ while running:
         color="orange",
         rect=ball
     )
+    # move ball
     move_ball()
+    # move player
+    move_player()
+    # cpu move
+    move_cpu()
     
     clock.tick(60)
     pygame.display.update()
