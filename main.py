@@ -73,9 +73,9 @@ def move_player():
 
 # player movement
 def move_cpu():
-    if ball.centery > cpu.centery and player.bottom <= height:
+    if ball.centery > cpu.centery and cpu.bottom < height:
         cpu.y += cpu_speed
-    if ball.centery < cpu.centery and player.top >= 0:
+    if ball.centery < cpu.centery and cpu.top > 0:
         cpu.y -= cpu_speed
 
 # resetting the ball after missing
