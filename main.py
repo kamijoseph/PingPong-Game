@@ -78,10 +78,18 @@ def move_player():
 
 # player movement
 def move_cpu():
-    if ball.centery > cpu.centery and cpu.bottom < height:
-        cpu.y += cpu_speed
-    if ball.centery < cpu.centery and cpu.top > 0:
-        cpu.y -= cpu_speed
+    # reaction chance per frame
+    reaction_chance = 0.8
+    if random.random() > reaction_chance:
+        return
+    
+    # target offset to avoid perfect tracking
+    cpu_target = ball.centery + random.randint(-15, 15)
+    if cpu_target > cpu.centery and cpu.bottom < height:
+        cpu.y += min(cpu_speed, cpu_target - cpu.centery)
+    elif cpu_target < cpu.centery and cpu.top > 0:
+        cpu.y -= min(cpu_speed, cpu.centery - cpu_target)
+
 
 # resetting the ball after missing
 def reset_ball():
