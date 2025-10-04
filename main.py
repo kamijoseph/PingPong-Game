@@ -1,6 +1,8 @@
 
 # pingpong game using pygame
 import pygame
+import random
+
 pygame.init()
 
 # dimensions
@@ -74,7 +76,10 @@ def move_cpu():
 
 # resetting the ball after missing
 def reset_ball():
+    global ball_speed_x, ball_speed_y
     ball.center = (width/2, height/2)
+    ball_speed_x *= random.choice([1, -1])
+    ball_speed_y *= random.choice([1, -1])
 
 # while loop for continuos running
 running = True
