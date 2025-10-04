@@ -21,7 +21,7 @@ pygame.display.set_caption("pong game")
 
 # player initialization and movement
 player = pygame.Rect(0, 0, 20, 70)
-player.centery = 280
+player.centery = height/2
 player.x = 10
 player_speed = 5
 player_score = 0
@@ -56,7 +56,11 @@ def move_ball():
         player_score += 1
         reset_ball()
 
-    if ball.colliderect(player) or ball.colliderect(cpu):
+    if ball.colliderect(player):
+        ball.left = player.right
+        ball_speed_x *= -1
+    if ball.colliderect(cpu):
+        ball.right = cpu.left
         ball_speed_x *= -1
 
 # player movement
