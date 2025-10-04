@@ -59,6 +59,11 @@ def move_ball():
     if ball.colliderect(player):
         ball.left = player.right
         ball_speed_x *= -1
+
+        #calculating offset based on hit position
+        offset = (ball.centery - player.centery) / (player.height / 2)
+        ball_speed_y = offset * 5
+
     if ball.colliderect(cpu):
         ball.right = cpu.left
         ball_speed_x *= -1
