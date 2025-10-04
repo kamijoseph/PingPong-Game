@@ -11,7 +11,7 @@ height = 600
 clock = pygame.time.Clock()
 
 #........
-font = pygame.font.Font(None, 30)
+font = pygame.font.Font(None, 40)
 
 # screen initialization
 screen = pygame.display.set_mode((width, height))
@@ -19,7 +19,7 @@ pygame.display.set_caption("pong game")
 
 # player initialization and movement
 player = pygame.Rect(0, 0, 20, 70)
-player.centery = height/2
+player.centery = 280
 player.x = 10
 player_speed = 5
 player_score = 0
@@ -48,9 +48,11 @@ def move_ball():
         ball_speed_y *= -1
 
     if ball.left <= 0:
-        player_score += 1
+        cpu_score += 1
+        reset_ball()
     if ball.right >= width:
         player_score += 1
+        reset_ball()
 
     if ball.colliderect(player) or ball.colliderect(cpu):
         ball_speed_x *= -1
@@ -70,7 +72,9 @@ def move_cpu():
     if ball.centery < cpu.centery and player.top >= 0:
         cpu.y -= cpu_speed
 
-
+# resetting the ball after missing
+def reset_ball():
+    ball.center = (width/2, height/2)
 
 # while loop for continuos running
 running = True
@@ -112,12 +116,12 @@ while running:
     player_speed_surface = font.render(
         str(player_score),
         False,
-        (0, 0, 255)
+        (255, 255, 255)
     )
     cpu_speed_surface = font.render(
         str(cpu_score),
         False,
-        (0, 0, 255)
+        (255, 255, 255)
     )
 
     screen.blit(
